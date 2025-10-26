@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="sq">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kërkesë teme — Mentorja Akademike</title>
+  <meta name="description" content="Mentorim akademik, fusha kërkimi dhe bashkëpunime me universitete." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="index.html">Mentorja Akademike</a>
+      <span class="tag">Mentorim & Kërkim</span>
+      <nav class="menu">
+        <a class="navlink " href="index.html">Ballina</a>
+        <a class="navlink " href="sherbimet.html">Shërbimet tona</a>
+        <a class="navlink " href="fushat.html">Fushat e kërkimit</a>
+        <a class="navlink " href="universitetet.html">Universitetet</a>
+        <a class="navlink " href="rreth-nesh.html">Rreth nesh</a>
+        <a class="navlink active" href="kerkesa.html">Kërkesë teme</a>
+        <a class="navlink " href="kontakt.html">Kontakt</a>
+      </nav>
+      <div class="ig">
+        <a class="btn" href="https://www.instagram.com/mentorja.akademike/" target="_blank" rel="noopener">Instagram ↗</a>
+      </div>
+    </aside>
+    <main class="main">
+
+      <section class="hero">
+        <h1 class="h1">Kërkesë teme</h1>
+        <p class="lead">Plotëso formularin — ne do të të kthejmë përgjigje në të njëjtin email me mundësinë dhe një datë të përafërt.</p>
+      </section>
+      <section class="section">
+        <form id="requestForm" class="card" style="display:grid; gap:12px; max-width:680px">
+          <input type="hidden" name="_subject" value="Kërkesë e re — Mentorja Akademike" />
+          <label>Emri dhe mbiemri<br><input name="emri" required placeholder="Shkruaj emrin" style="width:100%; padding:10px; border:1px solid rgba(0,0,0,.15); border-radius:10px;"></label>
+          <label>Email<br><input name="email" type="email" required placeholder="shembull@posta.com" style="width:100%; padding:10px; border:1px solid rgba(0,0,0,.15); border-radius:10px;"></label>
+          <label>Titulli i temës / kërkimit<br><input name="titulli" required placeholder="P.sh. Përdorimi i sigurt i teknologjisë" style="width:100%; padding:10px; border:1px solid rgba(0,0,0,.15); border-radius:10px;"></label>
+          <label>Përshkrim i shkurtër (opsionale)<br><textarea name="pershkrimi" rows="5" placeholder="Qëllimi, programi, afati…" style="width:100%; padding:10px; border:1px solid rgba(0,0,0,.15); border-radius:10px;"></textarea></label>
+          <label style="display:flex; gap:8px; align-items:flex-start"><input type="checkbox" required> <span class="muted">Pranoj trajtimin e të dhënave vetëm për qëllimin e kësaj kërkese.</span></label>
+          <button class="btn" type="submit">Dërgo kërkesën</button>
+          <p id="formMsg" class="muted" style="margin:0;"></p>
+          <p class="muted" style="margin:0;">Shënim: vendos endpoint-in tënd të Formspree te <code>FORMSPREE_ENDPOINT</code>.</p>
+        </form>
+      </section>
+      <script>
+        const FORMSPREE_ENDPOINT = 'https://formspree.io/f/your-id-here';
+        const form = document.currentScript.previousElementSibling.querySelector('#requestForm');
+        const msg  = document.currentScript.previousElementSibling.querySelector('#formMsg');
+        if (form) {
+          form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            msg.textContent = 'Duke dërguar…';
+            const data = new FormData(form);
+            try {
+              const res = await fetch(FORMSPREE_ENDPOINT, { method: 'POST', body: data, headers: { 'Accept': 'application/json' }});
+              if (res.ok) { msg.textContent = 'Kërkesa u dërgua. Do të merrni përgjigje së shpejti.'; form.reset(); }
+              else { msg.textContent = 'Nuk u dërgua. Provoni sërish.'; }
+            } catch(err){ msg.textContent = 'Gabim gjatë dërgimit. Provoni sërish.'; }
+          });
+        }
+      </script>
+
+      <footer class="footer">
+        <span>© <span data-year></span> Mentorja Akademike</span>
+        <span>Faqe elegante, falas dhe miqësore me privatësinë.</span>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
